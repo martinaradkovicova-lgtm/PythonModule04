@@ -1,0 +1,39 @@
+def secure_archive(filename: str, action: str = "read", content: str = "") -> tuple[bool, str]:
+    try:
+        if action == "read" or action == "r":
+            with open(filename, "r") as file_obj:
+                data: str = file_obj.read()
+                return (True, data)
+        else:
+            with open(filename, "w") as file_obj:
+                file_obj.write(content)
+                return (True, "Content successfully written to file")
+    except Exception as e:
+        return (False, str(e))
+
+
+if __name__ == "__main__":
+    print("=== Cyber Archives Security ===")
+    print()
+
+    print("Using 'secure_archive' to read from a nonexistent file:")
+    res1 = secure_archive("/not/existing/file", "read")
+    print(res1)
+    print()
+
+    print("Using 'secure_archive' to read from an inaccessible file:")
+    res2 = secure_archive("/etc/master.passwd", "read")
+    print(res2)
+    print()
+
+    test_file = "ancient_fragment.txt"
+    sample_content = "[FRAGMENT 001] Digital preservation protocols established 2087\n[FRAGMENT 002] Knowledge must survive the entropy wars\n"
+    
+    print("Using 'secure_archive' to write to a file:")
+    res_write = secure_archive(test_file, "write", sample_content)
+    print(res_write)
+    print()
+
+    print("Using 'secure_archive' to read from a regular file:")
+    res3 = secure_archive(test_file, "read")
+    print(res3)
